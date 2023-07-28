@@ -115,7 +115,12 @@ function highlightWord(index) {
   readerTextElement.appendChild(fragment);
 }
 
-
+function pauseReading() {
+  if (isSpeaking) {
+    isReadingPaused = true;
+    stopSpeaking();
+  }
+}
 // Function to stop the reading
 function stopReading() {
   if (isSpeaking) {
