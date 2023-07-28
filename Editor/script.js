@@ -1,5 +1,6 @@
 // Function to save the document to local storage
 function saveDocumentToLocalStorage() {
+  hideDocumentSelectionPopup();
   const title = prompt('Enter the title for the document:');
   if (title !== null && title.trim() !== '') {
     const editorTextElement = document.getElementById('editorText');
@@ -29,6 +30,8 @@ const saveTextButton = document.getElementById('saveTextButton');
 saveTextButton.addEventListener('click', saveDocumentToLocalStorage);
 
 // Function to show the document selection pop-up
+// ... (previous functions remain the same) ...
+
 // Function to show the document selection pop-up
 function showDocumentSelectionPopup() {
   const documentSelectionPopup = document.getElementById('documentSelectionPopup');
@@ -38,30 +41,21 @@ function showDocumentSelectionPopup() {
   const documentList = document.getElementById('documentList');
   documentList.innerHTML = '';
   const documents = getDocumentsFromLocalStorage();
-  documents.forEach((documentItem) => { // Changed variable name here
+  documents.forEach((documentItem) => {
     const listItem = document.createElement('li');
-    listItem.textContent = documentItem.title; // Changed variable name here
+    listItem.textContent = documentItem.title;
     listItem.addEventListener('click', () => {
-      selectDocument(documentItem); // Changed variable name here
+      selectDocumentFromList(documentItem); // Change the function name here
       hideDocumentSelectionPopup();
     });
     documentList.appendChild(listItem);
   });
 }
 
-// ... (rest of the code remains the same) ...
-
-
-// Function to hide the document selection pop-up
-function hideDocumentSelectionPopup() {
-  const documentSelectionPopup = document.getElementById('documentSelectionPopup');
-  documentSelectionPopup.style.display = 'none';
-}
-
 // Function to select a document and populate the editor with its content
-function selectDocument(document) {
+function selectDocumentFromList(documentItem) { // Change the parameter name here
   const editorTextElement = document.getElementById('editorText');
-  editorTextElement.innerHTML = document.content;
+  editorTextElement.innerHTML = documentItem.content;
 }
 
 // Event listener to handle opening the document selection pop-up
@@ -71,3 +65,10 @@ openDocumentButton.addEventListener('click', showDocumentSelectionPopup);
 // Event listener to handle closing the document selection pop-up
 const closePopupButton = document.getElementById('closePopupButton');
 closePopupButton.addEventListener('click', hideDocumentSelectionPopup);
+
+
+// Function to hide the document selection pop-up
+function hideDocumentSelectionPopup() {
+  const documentSelectionPopup = document.getElementById('documentSelectionPopup');
+  documentSelectionPopup.style.display = 'none';
+}
