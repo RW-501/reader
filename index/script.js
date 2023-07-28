@@ -60,6 +60,8 @@ function readTextWithBlinking(text) {
           };
           utterance.onend = function () {
             if (!isReadingPaused) {
+                              console.log('isReadingPaused   '+index);
+
               speakChunks(index + 1);
             }
           };
