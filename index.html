@@ -16,7 +16,10 @@
   </nav>
 
 <main>
+                    <button id="optionsButton" onclick="">Options</button>
+
   <div class="reader-container">
+
     <h2 id="mainTitle">Reader</h2>
     <div class="BTNs-area">
     </div>
@@ -24,7 +27,7 @@
     <div id="readerText" class="reader-text">Your reader text here...</div>
 
       <div id="readerControls" class="control-panel">
-              <button id="optionsButton" onclick="">Options</button>
+<button id="viewReadersButton" class="main-button" onclick="showReaderList()">View Readers List</button>
 
       <button id="audioButton" class="control-button">Read</button>
       <button id="pauseButton" class="control-button">Pause</button>
@@ -44,7 +47,6 @@
   <button class="popup-button" onclick="saveVoiceSettings()">Save</button>
 </div>
 
-<button id="viewReadersButton" class="main-button" onclick="showReaderList()">View Readers List</button>
 
 <div id="readerListPopup" class="popup">
   <h2 class="popup-title">Reader Stories</h2>
