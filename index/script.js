@@ -21,6 +21,43 @@ use your logic to make this work like a mainstream reader and even better.
 var isReadingPaused = false; // Track if the reading is paused
 var isReadingStopped = false; // Track if the reading is stopped
 
+function speakChunks(synthesis, chunks, index) {
+  if (isReadingStopped) {
+    // If reading is stopped, return and reset the state
+    isReadingStopped = false;
+    currentWordIndex = 0;
+    isSpeaking = false;
+    return;
+  }
+
+  if (index < chunks.length) {
+    console.log('chunks.length   ' + chunks.length);
+
+    utterance.text = chunks[index];
+    synthesis.speak(utterance);
+    utterance.onstart = function () {
+      isReadingPaused = false;
+      isSpeaking = true;
+      currentWordIndex = index; // Update the currentWordIndex to the current index being read
+      console.log('currentWordIndex   ' + currentWordIndex);
+
+      highlightWord(index); // Highlight the current word being read
+    };
+    utterance.onend = function () {
+      if (!isReadingPaused) {
+        console.log('isReadingPaused   ' + index);
+
+        speakChunks(synthesis, chunks, index + 1);
+      }
+    };
+  } else {
+    // If reading is completed, reset the state
+    currentWordIndex = 0;
+    isSpeaking = false;
+    stopBlinking();
+  }
+}
+
 function readTextWithBlinking(text) {
   if (isAudioEnabled === true) {
     if (isSpeaking) {
@@ -32,49 +69,10 @@ function readTextWithBlinking(text) {
     if ('speechSynthesis' in window) {
       var synthesis = window.speechSynthesis;
 
-           
-     const chunks = prepareTextForReading(text);
-
-      // Function to speak the chunks sequentially
-          function speakChunks(index) {
-        if (isReadingStopped) {
-          // If reading is stopped, return and reset the state
-          isReadingStopped = false;
-          currentWordIndex = 0;
-          isSpeaking = false;
-          return;
-        }
-
-        if (index < chunks.length) {
-                 console.log('chunks.length   '+chunks.length);
-
-          utterance.text = chunks[index];
-          synthesis.speak(utterance);
-          utterance.onstart = function () {
-            isReadingPaused = false;
-            isSpeaking = true;
-            currentWordIndex = index; // Update the currentWordIndex to the current index being read
-                 console.log('currentWordIndex   '+currentWordIndex);
-
-            highlightWord(index); // Highlight the current word being read
-          };
-          utterance.onend = function () {
-            if (!isReadingPaused) {
-                              console.log('isReadingPaused   '+index);
-
-              speakChunks(index + 1);
-            }
-          };
-        } else {
-          // If reading is completed, reset the state
-          currentWordIndex = 0;
-          isSpeaking = false;
-          stopBlinking();
-        }
-      }
+      const chunks = prepareTextForReading(text);
 
       // Call the function to start reading from the currentWordIndex
-      speakChunks(currentWordIndex);
+      speakChunks(synthesis, chunks, currentWordIndex);
     } else {
       console.log('Text-to-speech is not supported in this browser.');
     }
