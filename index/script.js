@@ -94,7 +94,7 @@ function prepareTextForReading(text, chunkSize = 5) {
   const words = textToRead.split('.');
 
   for (let i = 0; i < words.length; i += chunkSize) {
-    const chunk = words.slice(i, i + chunkSize).join(' ');
+    const chunk = words.slice(i, i + chunkSize).join('. ');
     chunks.push(chunk);
   }
 
@@ -105,7 +105,7 @@ function prepareTextForReading(text, chunkSize = 5) {
 // Function to highlight the current word being read
 function highlightWord(index) {
   const readerTextElement = document.getElementById('readerText');
-  const words = readerTextElement.innerHTML.split('.');
+  const words = readerTextElement.innerHTML.split('. ');
 
   clearCurrentReaderSpot();
 
@@ -113,7 +113,7 @@ function highlightWord(index) {
   const fragment = document.createDocumentFragment();
 
   words.forEach((word, i) => {
-    const span = document.createElement('rd');
+    const span = document.createElement('div');
     span.innerHTML = word;
     if (i === index) {
       span.classList.add('highlighted-word');
