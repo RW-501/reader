@@ -191,9 +191,15 @@ function hideOptionsPopup() {
   optionsPopup.style.display = 'none';
 }
 
+// Define isAudioEnabled and other necessary variables
+var isAudioEnabled = true;
+var blinkInterval;
+var utterance = new SpeechSynthesisUtterance();
+var isSpeaking = false;
+
 // Function to start the blinking effect
 function startBlinking() {
-  blinkInterval = setInterval(function() {
+  blinkInterval = setInterval(function () {
     blinkDiv.classList.toggle('blink');
   }, 500);
 }
@@ -204,17 +210,102 @@ function stopBlinking() {
   blinkDiv.classList.remove('blink');
 }
 
-// Event listener for the read button to show the options popup
-var blinkDiv = document.getElementById('readButton');
-var blinkInterval;
+// Function to toggle audio
+function toggleAudio() {
+  isAudioEnabled = !isAudioEnabled;
+  updateAudioButton();
+}
 
-blinkDiv.addEventListener('click', function() {
-  showOptionsPopup();
-  startBlinking();
-});
+// Function to update the audio button text
+function updateAudioButton() {
+  audioButton.textContent = ` ${isAudioEnabled ? 'On' : 'Off'}`;
+}
 
-// ... (existing JavaScript code) ...
+// Load audio settings from local storage
+function loadAudioSettings() {
+  const settings = getSettings();
+  isAudioEnabled = settings.audioEnabled !== undefined ? settings.audioEnabled : true;
+  updateAudioButton();
+}
 
+// Event listener for the audio button
+audioButton.addEventListener('click', toggleAudio);
+loadAudioSettings();
+
+// Function to get the matching voice
+function getMatchingVoice(voiceName) {
+  if ('speechSynthesis' in window) {
+    var synthesis = window.speechSynthesis;
+    var voices = synthesis.getVoices();
+    var matchedVoice = voices.find(function (voice) {
+      return voice.name === voiceName;
+    });
+    return matchedVoice;
+  } else {
+    console.log('Text-to-speech is not supported in this browser.');
+    return null;
+  }
+}
+
+// Function to get the user's operating system
+function getUserOperatingSystem() {
+  const userAgentString = navigator.userAgent;
+
+  if (userAgentString.includes('Windows')) {
+    return 'Windows';
+  } else if (userAgentString.includes('Macintosh')) {
+    return 'Mac';
+  } else if (userAgentString.includes('Linux')) {
+    return 'Linux';
+  } else if (userAgentString.includes('Android')) {
+    return 'Android';
+  } else if (userAgentString.includes('iOS')) {
+    return 'iOS';
+  } else {
+    return 'Unknown';
+  }
+}
+
+// Function to populate the voice dropdown
+function populateVoiceDropdown() {
+  var voiceDropdown = document.getElementById('voiceDropdown');
+
+  // Wait for the 'voiceschanged' event
+  speechSynthesis.addEventListener('voiceschanged', function () {
+    var voices = speechSynthesis.getVoices();
+
+    voices.forEach(function (voice) {
+      var option = document.createElement('option');
+      option.value = voice.voiceURI;
+      option.textContent = voice.name;
+      voiceDropdown.appendChild(option);
+    });
+  });
+}
+
+// Function to save voice settings to local storage
+function saveVoiceSettings() {
+  var rateSlider = document.getElementById('rateSlider');
+  var voiceDropdown = document.getElementById('voiceDropdown');
+
+  var voiceSettings = {
+    rate: parseFloat(rateSlider.value),
+    voice: voiceDropdown.value,
+  };
+  saveSettings('voiceSettings', voiceSettings);
+}
+
+// Function to load voice settings from local storage
+function loadVoiceSettings() {
+  var voiceSettings = JSON.parse(localStorage.getItem('voiceSettings'));
+  if (voiceSettings) {
+    var rateSlider = document.getElementById('rateSlider');
+    var voiceDropdown = document.getElementById('voiceDropdown');
+
+    rateSlider.value = voiceSettings.rate;
+    voiceDropdown.value = voiceSettings.voice;
+  }
+}
 
 
 
