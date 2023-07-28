@@ -18,7 +18,10 @@ function readTextFunc() {
 
 
 
-// Function to read the text with blinking effect
+var currentWordIndex = 0; // Keep track of the current word being read
+var isReadingPaused = false; // Track if the reading is paused
+var isReadingStopped = false; // Track if the reading is stopped
+
 function readTextWithBlinking(text) {
   if (isAudioEnabled === true) {
     if (isSpeaking) {
@@ -48,12 +51,32 @@ function readTextWithBlinking(text) {
 
       // Function to speak the chunks sequentially
       function speakChunks(index) {
+        if (isReadingStopped) {
+          // If reading is stopped, return and reset the state
+          isReadingStopped = false;
+          currentWordIndex = 0;
+          isSpeaking = false;
+          return;
+        }
+
         if (index < chunks.length) {
           utterance.text = chunks[index];
           synthesis.speak(utterance);
-          utterance.onend = function () {
-            speakChunks(index + 1);
+          utterance.onstart = function () {
+            isReadingPaused = false;
+            isSpeaking = true;
+            highlightWord(index); // Highlight the current word being read
           };
+          utterance.onend = function () {
+            if (!isReadingPaused) {
+              speakChunks(index + 1);
+            }
+          };
+        } else {
+          // If reading is completed, reset the state
+          currentWordIndex = 0;
+          isSpeaking = false;
+          stopBlinking();
         }
       }
 
@@ -70,23 +93,64 @@ function readTextWithBlinking(text) {
       // Event listener for the end of speech
       utterance.onend = function () {
         isSpeaking = false;
-        document.getElementById('readButton').innerHTML =
-          "<div>🔈</div><span>Read</span>";
         stopBlinking();
       };
       startBlinking();
 
       // Start speaking
-      document.getElementById('readButton').innerHTML =
-        "<div>🔈</div><span>Reading</span>";
-      isSpeaking = true;
-      speakChunks(0);
+      isReadingPaused = false;
+      speakChunks(currentWordIndex);
     } else {
       console.log('Text-to-speech is not supported in this browser.');
     }
   }
 }
 
+// Function to highlight the current word being read
+function highlightWord(index) {
+  const readerTextElement = document.getElementById('readerText');
+  const words = readerTextElement.textContent.split(' ');
+  const currentWord = words[index];
+  readerTextElement.innerHTML = words
+    .map((word, i) =>
+      i === index
+        ? `<span class="highlighted-word">${word}</span>`
+        : `<span>${word}</span>`
+    )
+    .join(' ');
+}
+
+// Function to pause the reading
+function pauseReading() {
+  if (isSpeaking) {
+    isReadingPaused = true;
+    stopSpeaking();
+  }
+}
+
+// Function to stop the reading
+function stopReading() {
+  if (isSpeaking) {
+    isReadingStopped = true;
+    stopSpeaking();
+  }
+}
+
+// Event listener for start/pause button
+const readButton = document.getElementById('readButton');
+readButton.addEventListener('click', () => {
+  const readerTextElement = document.getElementById('readerText');
+  const content = readerTextElement.textContent;
+  readTextWithBlinking(content);
+});
+
+// Event listener for pause button
+const pauseButton = document.getElementById('pauseButton');
+pauseButton.addEventListener('click', pauseReading);
+
+// Event listener for stop button
+const stopButton = document.getElementById('stopButton');
+stopButton.addEventListener('click', stopReading);
 
 
 
@@ -131,7 +195,7 @@ function showReaderList() {
     const listItem = document.createElement('li');
     listItem.textContent = reader.title;
     listItem.addEventListener('click', () => {
-      populateReaderScreen(reader.content);
+      populateReaderScreen(reader.content,reader.title);
       hideReaderList();
     });
     readerList.appendChild(listItem);
@@ -145,13 +209,6 @@ function hideReaderList() {
   readerListPopup.style.display = 'none';
 }
 
-// Function to save a reader story to local storage
-// Function to save a reader story as a document to local storage
-function saveReaderToLocalStorage(title, content) {
-  const documents = getDocumentsFromLocalStorage();
-  documents.push({ title, content });
-  localStorage.setItem('documents', JSON.stringify(documents));
-}
 
 
 
@@ -165,10 +222,14 @@ function getDocumentsFromLocalStorage() {
 }
 
 // Function to populate the reader screen with the selected story
-function populateReaderScreen(content) {  
+function populateReaderScreen(content, title) {  
   //console.log("populateReaderScreen() called with content:", content);
   const readerTextElement = document.getElementById('readerText');
   readerTextElement.innerHTML = content;
+    const mainTitleElement = document.getElementById('mainTitle');
+  mainTitleElement.innerHTML = title;
+
+  
 }
 
 
