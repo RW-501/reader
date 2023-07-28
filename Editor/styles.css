@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+nav {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+}
+
+.nav-list {
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+}
+
+.nav-list li {
+  margin-right: 20px;
+}
+
+.editor-container {
+  width: 80%;
+  margin: 50px auto;
+}
+
+.editor-text {
+  border: 1px solid #ccc;
+  padding: 10px;
+  min-height: 300px;
+}
+
+#saveTextButton {
+  padding: 10px 20px;
+  margin-top: 10px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* ... (remaining CSS code) ... */
