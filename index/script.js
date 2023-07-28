@@ -1,11 +1,13 @@
 // Function to read the text
 function readTextFunc(text) {
-  // Your existing readTextFunc implementation goes here
-  // ... (existing code)
+  const readerTextElement = document.getElementById('readerText');
+  readerTextElement.textContent = text;
 
   // Use the updated text and call the function to read it
   readTextWithBlinking(text);
 }
+
+
 
 // Function to read the text with blinking effect
 function readTextWithBlinking(text) {
@@ -79,13 +81,6 @@ function readTextWithBlinking(text) {
 
 
 
-
-
-// Example function to update the reader text content
-function updateReaderText(text) {
-  const readerTextElement = document.getElementById('readerText');
-  readerTextElement.textContent = text;
-}
 
 
 
