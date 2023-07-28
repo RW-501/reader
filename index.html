@@ -15,20 +15,28 @@
     </ul>
   </nav>
 
-  <main>
-    <div class="reader-container">
-      <button id="readButton" class="reader-button" onclick="readTextFunc('Your text goes here')">Read</button>
-      <div class="reader-text" id="readerText">
-        <!-- Your text content goes here -->
-      </div>
-    </div>
-  </main>
+<main>
+  <div class="reader-container">
+    <h2>Reader</h2>
+    <div id="readerText" class="reader-text">Your reader text here...</div>
+    <button id="readButton" onclick="readTextFunc()">Read</button>
+  </div>
+</main>
 
   <div id="optionPopover" class="popover">
     <!-- Popover content goes here -->
   </div>
 
-
+<div id="optionsPopup" class="popup">
+  <h2>Audio Settings</h2>
+  <label for="volumeSlider">Volume:</label>
+  <input type="range" id="volumeSlider" min="0" max="1" step="0.1">
+  <label for="voiceDropdown">Voice:</label>
+  <select id="voiceDropdown"></select>
+  <label for="rateSlider">Speech Rate:</label>
+  <input type="range" id="rateSlider" min="0.1" max="2" step="0.1">
+  <button onclick="saveVoiceSettings()">Save</button>
+</div>
 
   
 <!-- ... (previous HTML code) ... -->
