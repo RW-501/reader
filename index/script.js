@@ -156,10 +156,10 @@ function getDocumentsFromLocalStorage() {
 }
 
 // Function to populate the reader screen with the selected story
-function populateReaderScreen(content) {
-  console.log("populateReaderScreen() called with content:", content);
+function populateReaderScreen(content) {  
+  //console.log("populateReaderScreen() called with content:", content);
   const readerTextElement = document.getElementById('readerText');
-  readerTextElement.textContent = content;
+  readerTextElement.innerHTML = content;
 }
 
 
