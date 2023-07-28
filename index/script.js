@@ -105,6 +105,8 @@ function readTextWithBlinking(text) {
   }
 }
 
+
+
 // Function to highlight the current word being read
 function highlightWord(index) {
   const readerTextElement = document.getElementById('readerText');
@@ -135,13 +137,55 @@ function stopReading() {
   }
 }
 
+// Function to stop the ongoing speech
+function stopSpeaking() {
+  if ('speechSynthesis' in window) {
+    const synthesis = window.speechSynthesis;
+    synthesis.cancel();
+  }
+  isSpeaking = false;
+  document.getElementById('readButton').innerHTML =
+    "<div>🔈</div><span>Read</span>";
+  stopBlinking();
+
+  if (isReadingStopped) {
+    // Clear the saved current reader spot
+    clearCurrentReaderSpot();
+  }
+}
+
+// Function to clear the saved current reader spot
+function clearCurrentReaderSpot() {
+  // Your implementation goes here...
+}
+
 // Event listener for start/pause button
 const readButton = document.getElementById('audioButton');
 readButton.addEventListener('click', () => {
   const readerTextElement = document.getElementById('readerText');
   const content = readerTextElement.textContent;
-  readTextWithBlinking(content);
+
+  // Reset reading status
+  isReadingPaused = false;
+  isReadingStopped = false;
+
+  // Start or pause reading based on current status
+  if (isSpeaking) {
+    if (isReadingPaused) {
+      // Continue reading from the current spot
+      startBlinking();
+      isSpeaking = true;
+      isReadingPaused = false;
+    } else {
+      // Pause the reading
+      pauseReading();
+    }
+  } else {
+    // Start reading from the beginning
+    readTextWithBlinking(content);
+  }
 });
+
 
 // Event listener for pause button
 const pauseButton = document.getElementById('pauseButton');
