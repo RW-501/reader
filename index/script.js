@@ -1,7 +1,16 @@
+// Define isAudioEnabled and other necessary variables
+var isAudioEnabled = true;
+var blinkInterval;
+var utterance = new SpeechSynthesisUtterance();
+var isSpeaking = false;
+
+
+
+
 // Function to read the text
-function readTextFunc(text) {
+function readTextFunc() {
   const readerTextElement = document.getElementById('readerText');
-  readerTextElement.textContent = text;
+  let text = readerTextElement.textContent;
 
   // Use the updated text and call the function to read it
   readTextWithBlinking(text);
@@ -25,12 +34,12 @@ function readTextWithBlinking(text) {
       let replacedQuestion2 = text.replace(blankPattern, ' blank ');
 
       let blankPattern2 = 'True or False:'; // Pattern for one or more underscores
-      let replacedQuestion = replacedQuestion2.replace(blankPattern2, '');
+      let textToRead = replacedQuestion2.replace(blankPattern2, '');
 
       // Split the text into chunks
       var chunkSize = 200; // Adjust the chunk size as needed
       var chunks = [];
-      var words = replacedQuestion.split(' ');
+      var words = textToRead.split(' ');
 
       for (var i = 0; i < words.length; i += chunkSize) {
         var chunk = words.slice(i, i + chunkSize).join(' ');
@@ -186,11 +195,9 @@ function hideOptionsPopup() {
   optionsPopup.style.display = 'none';
 }
 
-// Define isAudioEnabled and other necessary variables
-var isAudioEnabled = true;
-var blinkInterval;
-var utterance = new SpeechSynthesisUtterance();
-var isSpeaking = false;
+
+
+
 
 // Function to start the blinking effect
 function startBlinking() {
