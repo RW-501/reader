@@ -25,7 +25,7 @@ function speakChunks(synthesis, chunks, index) {
   if (isReadingStopped) {
     // If reading is stopped, return and reset the state
     isReadingStopped = false;
-    currentWordIndex = 0;
+  //  currentWordIndex = 0;
     isSpeaking = false;
     return;
   }
@@ -40,7 +40,7 @@ function speakChunks(synthesis, chunks, index) {
       isReadingPaused = false;
       isSpeaking = true;
       currentWordIndex = index; // Update the currentWordIndex to the current index being read
-      console.log('currentWordIndex   ' + currentWordIndex);
+ //     console.log('currentWordIndex   ' + currentWordIndex);
 
       highlightWord(index); // Highlight the current word being read
     };
@@ -126,7 +126,7 @@ function highlightWord(index) {
   const words = readerTextElement.textContent.split('. ');
 
   //clearCurrentReaderSpot();
-
+console.log('currentWordIndex   ' + currentWordIndex);
   // Create a new document fragment to build the updated content
   const fragment = document.createDocumentFragment();
 
