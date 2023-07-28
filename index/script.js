@@ -91,7 +91,7 @@ function prepareTextForReading(text, chunkSize = 200) {
 
   // Split the text into chunks
   const chunks = [];
-  const words = textToRead.split(' ');
+  const words = textToRead.split('div');
 
   for (let i = 0; i < words.length; i += chunkSize) {
     const chunk = words.slice(i, i + chunkSize).join(' ');
@@ -105,7 +105,7 @@ function prepareTextForReading(text, chunkSize = 200) {
 // Function to highlight the current word being read
 function highlightWord(index) {
   const readerTextElement = document.getElementById('readerText');
-  const words = readerTextElement.textContent.split(' ');
+  const words = readerTextElement.innerHTML.split('div');
 
   clearCurrentReaderSpot();
 
@@ -123,7 +123,7 @@ function highlightWord(index) {
   });
 
   // Clear the previous content and append the updated content
-  readerTextElement.textContent = '';
+  readerTextElement.innerHTML = '';
   readerTextElement.appendChild(fragment);
 }
 
