@@ -3,6 +3,7 @@ var isAudioEnabled = true;
 var blinkInterval;
 var utterance = new SpeechSynthesisUtterance();
 var isSpeaking = false;
+let currentWordIndex = 0;
 
 /*
 
@@ -49,7 +50,7 @@ function readTextWithBlinking(text) {
       }
 
       // Function to speak the chunks sequentially
-      function speakChunks(index) {
+          function speakChunks(index) {
         if (isReadingStopped) {
           // If reading is stopped, return and reset the state
           isReadingStopped = false;
@@ -64,6 +65,7 @@ function readTextWithBlinking(text) {
           utterance.onstart = function () {
             isReadingPaused = false;
             isSpeaking = true;
+            currentWordIndex = index; // Update the currentWordIndex to the current index being read
             highlightWord(index); // Highlight the current word being read
           };
           utterance.onend = function () {
@@ -79,25 +81,7 @@ function readTextWithBlinking(text) {
         }
       }
 
-      // Load voice settings from local storage
-      var voiceSettings = JSON.parse(localStorage.getItem('voiceSettings'));
-      if (voiceSettings) {
-        var voice = getMatchingVoice(voiceSettings.voice);
-        if (voice) {
-          utterance.voice = voice;
-        }
-        utterance.rate = voiceSettings.rate;
-      }
-
-      // Event listener for the end of speech
-      utterance.onend = function () {
-        isSpeaking = false;
-        stopBlinking();
-      };
-      startBlinking();
-
-      // Start speaking
-      isReadingPaused = false;
+      // Call the function to start reading from the currentWordIndex
       speakChunks(currentWordIndex);
     } else {
       console.log('Text-to-speech is not supported in this browser.');
@@ -111,23 +95,27 @@ function readTextWithBlinking(text) {
 function highlightWord(index) {
   const readerTextElement = document.getElementById('readerText');
   const words = readerTextElement.textContent.split(' ');
-  const currentWord = words[index];
-  readerTextElement.innerHTML = words
-    .map((word, i) =>
-      i === index
-        ? `<span class="highlighted-word">${word}</span>`
-        : `<span>${word}</span>`
-    )
-    .join(' ');
+
+  clearCurrentReaderSpot();
+
+  // Create a new document fragment to build the updated content
+  const fragment = document.createDocumentFragment();
+
+  words.forEach((word, i) => {
+    const span = document.createElement('span');
+    span.textContent = word;
+    if (i === index) {
+      span.classList.add('highlighted-word');
+    }
+    fragment.appendChild(span);
+    fragment.appendChild(document.createTextNode(' '));
+  });
+
+  // Clear the previous content and append the updated content
+  readerTextElement.textContent = '';
+  readerTextElement.appendChild(fragment);
 }
 
-// Function to pause the reading
-function pauseReading() {
-  if (isSpeaking) {
-    isReadingPaused = true;
-    stopSpeaking();
-  }
-}
 
 // Function to stop the reading
 function stopReading() {
@@ -137,7 +125,7 @@ function stopReading() {
   }
 }
 
-// Function to stop the ongoing speech
+/ Function to stop the ongoing speech
 function stopSpeaking() {
   if ('speechSynthesis' in window) {
     const synthesis = window.speechSynthesis;
@@ -147,17 +135,18 @@ function stopSpeaking() {
   document.getElementById('readButton').innerHTML =
     "<div>🔈</div><span>Read</span>";
   stopBlinking();
-
-  if (isReadingStopped) {
-    // Clear the saved current reader spot
-    clearCurrentReaderSpot();
-  }
 }
+
 
 // Function to clear the saved current reader spot
 function clearCurrentReaderSpot() {
-  // Your implementation goes here...
+  const readerTextElement = document.getElementById('readerText');
+  const words = readerTextElement.getElementsByTagName('span');
+  for (let i = 0; i < words.length; i++) {
+    words[i].classList.remove('highlighted-word');
+  }
 }
+
 
 // Event listener for start/pause button
 const readButton = document.getElementById('audioButton');
