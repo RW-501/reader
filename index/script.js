@@ -413,7 +413,6 @@ function populateVoiceDropdown() {
   });
 }
 
-// Function to save voice settings to local storage
 function saveVoiceSettings() {
   var rateSlider = document.getElementById('rateSlider');
   var voiceDropdown = document.getElementById('voiceDropdown');
@@ -422,8 +421,11 @@ function saveVoiceSettings() {
     rate: parseFloat(rateSlider.value),
     voice: voiceDropdown.value,
   };
-  saveSettings('voiceSettings', voiceSettings);
+  
+  // Save the settings to local storage
+  localStorage.setItem('settings', JSON.stringify(voiceSettings));
 }
+
 
 // Function to load voice settings from local storage
 function loadVoiceSettings() {
