@@ -46,6 +46,8 @@ function readTextWithBlinking(text) {
         }
 
         if (index < chunks.length) {
+                 console.log('chunks.length   '+chunks.length);
+
           utterance.text = chunks[index];
           synthesis.speak(utterance);
           utterance.onstart = function () {
