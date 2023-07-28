@@ -19,12 +19,27 @@
     <div class="editor-container">
       <h2>Editor</h2>
       <div contenteditable="true" id="editorText" class="editor-text"></div>
-      <button id="saveTextButton">Save Document</button>
     </div>
   </main>
 <!-- Button to open the document selection pop-up -->
-<button id="openDocumentButton">Open Document</button>
 
+  
+<main>
+  <div class="editor-container">
+    <h2>Editor</h2>
+    <div class="editor-controls">
+      <button id="saveTextButton" class="editor-button">Save</button>
+      <button id="openDocumentButton" class="editor-button">Open Document</button>
+      <button id="clearTextButton" class="editor-button">Clear Text</button>
+    </div>
+    <div id="editorText" class="editor-text" contenteditable="true">
+      Your editor text here...
+    </div>
+  </div>
+</main>
+
+
+  
 <!-- Document selection pop-up -->
 <div id="documentSelectionPopup" class="popup">
   <div class="popup-content">
