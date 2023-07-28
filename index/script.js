@@ -124,7 +124,7 @@ function stopReading() {
   }
 }
 
-/ Function to stop the ongoing speech
+// Function to stop the ongoing speech
 function stopSpeaking() {
   if ('speechSynthesis' in window) {
     const synthesis = window.speechSynthesis;
