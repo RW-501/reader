@@ -64,12 +64,22 @@ nav {
   margin: 2%;
 
   border: none;
-  background-color: #007bff;
+    background-color: #00BCD4;
   color: #fff;
   border-radius: 5px;
 }
 
 /* ... (your other CSS styles) ... */
+
+#optionsButton {
+    padding: 15px 30px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #00BCD4;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+}
 
 
 .main-button {
