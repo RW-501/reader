@@ -29,6 +29,7 @@ const saveTextButton = document.getElementById('saveTextButton');
 saveTextButton.addEventListener('click', saveDocumentToLocalStorage);
 
 // Function to show the document selection pop-up
+// Function to show the document selection pop-up
 function showDocumentSelectionPopup() {
   const documentSelectionPopup = document.getElementById('documentSelectionPopup');
   documentSelectionPopup.style.display = 'block';
@@ -37,16 +38,19 @@ function showDocumentSelectionPopup() {
   const documentList = document.getElementById('documentList');
   documentList.innerHTML = '';
   const documents = getDocumentsFromLocalStorage();
-  documents.forEach((document) => {
+  documents.forEach((documentItem) => { // Changed variable name here
     const listItem = document.createElement('li');
-    listItem.textContent = document.title;
+    listItem.textContent = documentItem.title; // Changed variable name here
     listItem.addEventListener('click', () => {
-      selectDocument(document);
+      selectDocument(documentItem); // Changed variable name here
       hideDocumentSelectionPopup();
     });
     documentList.appendChild(listItem);
   });
 }
+
+// ... (rest of the code remains the same) ...
+
 
 // Function to hide the document selection pop-up
 function hideDocumentSelectionPopup() {
