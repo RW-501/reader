@@ -1,3 +1,20 @@
+// ... (previous functions remain the same) ...
+
+// Function to clear the text in the editor
+function clearText() {
+  const editorTextElement = document.getElementById('editorText');
+  editorTextElement.innerHTML = '';
+}
+
+// Event listener to handle clearing the text in the editor
+const clearTextButton = document.getElementById('clearTextButton');
+clearTextButton.addEventListener('click', clearText);
+
+// ... (rest of the code remains the same) ...
+
+
+
+
 // Function to save the document to local storage
 function saveDocumentToLocalStorage() {
   hideDocumentSelectionPopup();
