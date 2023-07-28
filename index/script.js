@@ -3,7 +3,7 @@ var isAudioEnabled = true;
 var blinkInterval;
 var utterance = new SpeechSynthesisUtterance();
 var isSpeaking = false;
-let currentWordIndex = 0;
+var currentWordIndex = 0;
 
 /*
 
@@ -18,7 +18,6 @@ use your logic to make this work like a mainstream reader and even better.
 
 
 
-var currentWordIndex = 0; // Keep track of the current word being read
 var isReadingPaused = false; // Track if the reading is paused
 var isReadingStopped = false; // Track if the reading is stopped
 
