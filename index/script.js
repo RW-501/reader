@@ -142,6 +142,7 @@ function stopSpeaking() {
 }
 
 
+
 // Function to clear the saved current reader spot
 function clearCurrentReaderSpot() {
   const readerTextElement = document.getElementById('readerText');
@@ -178,7 +179,6 @@ readButton.addEventListener('click', () => {
     readTextWithBlinking(content);
   }
 });
-
 
 // Event listener for pause button
 const pauseButton = document.getElementById('pauseButton');
