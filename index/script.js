@@ -131,7 +131,7 @@ function pauseReading() {
     stopSpeaking();
   }else{
          speakChunks(currentWordIndex);
-)
+  }
    
 }
 // Function to stop the reading
