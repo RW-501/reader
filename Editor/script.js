@@ -111,10 +111,3 @@ function selectDocument(document) {
   editorTextElement.innerHTML = document.content;
 }
 
-// Event listener to handle opening the document selection pop-up
-const openDocumentButton = document.getElementById('openDocumentButton');
-openDocumentButton.addEventListener('click', showDocumentSelectionPopup);
-
-// Event listener to handle closing the document selection pop-up
-const closePopupButton = document.getElementById('closePopupButton');
-closePopupButton.addEventListener('click', hideDocumentSelectionPopup);
