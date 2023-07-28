@@ -4,6 +4,16 @@ var blinkInterval;
 var utterance = new SpeechSynthesisUtterance();
 var isSpeaking = false;
 
+/*
+
+#1 can you make the chunk size dynamic let it read a paragraph then get another chunk.
+ #2 want to highlight what is being read. 
+#3 add a start pause and stop button.
+#4 i want the user to be able to click a word and start at that point also.
+
+use your logic to make this work like a mainstream reader and even better.
+
+*/
 
 
 
