@@ -1,5 +1,85 @@
-// Your existing JavaScript code goes here
-// ...
+// Function to read the text
+function readTextFunc(text) {
+  // Your existing readTextFunc implementation goes here
+  // ... (existing code)
+
+  // Use the updated text and call the function to read it
+  readTextWithBlinking(text);
+}
+
+// Function to read the text with blinking effect
+function readTextWithBlinking(text) {
+  if (isAudioEnabled === true) {
+    if (isSpeaking) {
+      // Stop the ongoing speech
+      stopSpeaking();
+      return;
+    }
+
+    if ('speechSynthesis' in window) {
+      var synthesis = window.speechSynthesis;
+
+      let blankPattern = /_{1,}/; // Pattern for one or more underscores
+      let replacedQuestion2 = text.replace(blankPattern, ' blank ');
+
+      let blankPattern2 = 'True or False:'; // Pattern for one or more underscores
+      let replacedQuestion = replacedQuestion2.replace(blankPattern2, '');
+
+      // Split the text into chunks
+      var chunkSize = 200; // Adjust the chunk size as needed
+      var chunks = [];
+      var words = replacedQuestion.split(' ');
+
+      for (var i = 0; i < words.length; i += chunkSize) {
+        var chunk = words.slice(i, i + chunkSize).join(' ');
+        chunks.push(chunk);
+      }
+
+      // Function to speak the chunks sequentially
+      function speakChunks(index) {
+        if (index < chunks.length) {
+          utterance.text = chunks[index];
+          synthesis.speak(utterance);
+          utterance.onend = function () {
+            speakChunks(index + 1);
+          };
+        }
+      }
+
+      // Load voice settings from local storage
+      var voiceSettings = JSON.parse(localStorage.getItem('voiceSettings'));
+      if (voiceSettings) {
+        var voice = getMatchingVoice(voiceSettings.voice);
+        if (voice) {
+          utterance.voice = voice;
+        }
+        utterance.rate = voiceSettings.rate;
+      }
+
+      // Event listener for the end of speech
+      utterance.onend = function () {
+        isSpeaking = false;
+        document.getElementById('readButton').innerHTML =
+          "<div>🔈</div><span>Read</span>";
+        stopBlinking();
+      };
+      startBlinking();
+
+      // Start speaking
+      document.getElementById('readButton').innerHTML =
+        "<div>🔈</div><span>Reading</span>";
+      isSpeaking = true;
+      speakChunks(0);
+    } else {
+      console.log('Text-to-speech is not supported in this browser.');
+    }
+  }
+}
+
+
+
+
+
 
 // Example function to update the reader text content
 function updateReaderText(text) {
@@ -7,14 +87,7 @@ function updateReaderText(text) {
   readerTextElement.textContent = text;
 }
 
-// Function to read the text
-function readTextFunc(text) {
-  // Your existing readTextFunc implementation goes here
-  // ...
 
-  // Use the updated text and call the function to read it
-  readTextFunc(text);
-}
 
 // Function to show the popover
 function showPopover() {
@@ -94,6 +167,53 @@ function populateReaderScreen(content) {
   readerTextElement.textContent = content;
 }
 
+
+
+
+
+
+
+// ... (existing JavaScript code) ...
+
+// Function to show the options popup
+function showOptionsPopup() {
+  const optionsPopup = document.getElementById('optionsPopup');
+  optionsPopup.style.display = 'block';
+
+  // Load voice settings from local storage
+  loadVoiceSettings();
+  populateVoiceDropdown();
+}
+
+// Function to hide the options popup
+function hideOptionsPopup() {
+  const optionsPopup = document.getElementById('optionsPopup');
+  optionsPopup.style.display = 'none';
+}
+
+// Function to start the blinking effect
+function startBlinking() {
+  blinkInterval = setInterval(function() {
+    blinkDiv.classList.toggle('blink');
+  }, 500);
+}
+
+// Function to stop the blinking effect
+function stopBlinking() {
+  clearInterval(blinkInterval);
+  blinkDiv.classList.remove('blink');
+}
+
+// Event listener for the read button to show the options popup
+var blinkDiv = document.getElementById('readButton');
+var blinkInterval;
+
+blinkDiv.addEventListener('click', function() {
+  showOptionsPopup();
+  startBlinking();
+});
+
+// ... (existing JavaScript code) ...
 
 
 
