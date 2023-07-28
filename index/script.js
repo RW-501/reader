@@ -7,17 +7,6 @@ var isSpeaking = false;
 
 
 
-// Function to read the text
-function readTextFunc() {
-  const readerTextElement = document.getElementById('readerText');
-  let text = readerTextElement.textContent;
-
-  // Use the updated text and call the function to read it
-  readTextWithBlinking(text);
-}
-
-
-
 var currentWordIndex = 0; // Keep track of the current word being read
 var isReadingPaused = false; // Track if the reading is paused
 var isReadingStopped = false; // Track if the reading is stopped
@@ -137,7 +126,7 @@ function stopReading() {
 }
 
 // Event listener for start/pause button
-const readButton = document.getElementById('readButton');
+const readButton = document.getElementById('audioButton');
 readButton.addEventListener('click', () => {
   const readerTextElement = document.getElementById('readerText');
   const content = readerTextElement.textContent;
@@ -259,6 +248,7 @@ function hideOptionsPopup() {
 
 
 
+const blinkDiv = document.getElementById('audioButton');
 
 // Function to start the blinking effect
 function startBlinking() {
