@@ -79,7 +79,7 @@ function readTextWithBlinking(text) {
   }
 }
 
-function prepareTextForReading(text, chunkSize = 200) {
+function prepareTextForReading(text, chunkSize = 5) {
   // Replace patterns with appropriate content
 
  
@@ -91,7 +91,7 @@ function prepareTextForReading(text, chunkSize = 200) {
 
   // Split the text into chunks
   const chunks = [];
-  const words = textToRead.split('div');
+  const words = textToRead.split('.');
 
   for (let i = 0; i < words.length; i += chunkSize) {
     const chunk = words.slice(i, i + chunkSize).join(' ');
@@ -105,7 +105,7 @@ function prepareTextForReading(text, chunkSize = 200) {
 // Function to highlight the current word being read
 function highlightWord(index) {
   const readerTextElement = document.getElementById('readerText');
-  const words = readerTextElement.innerHTML.split('div');
+  const words = readerTextElement.innerHTML.split('.');
 
   clearCurrentReaderSpot();
 
@@ -113,7 +113,7 @@ function highlightWord(index) {
   const fragment = document.createDocumentFragment();
 
   words.forEach((word, i) => {
-    const span = document.createElement('span');
+    const span = document.createElement('rd');
     span.textContent = word;
     if (i === index) {
       span.classList.add('highlighted-word');
