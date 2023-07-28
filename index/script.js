@@ -114,7 +114,7 @@ function highlightWord(index) {
 
   words.forEach((word, i) => {
     const span = document.createElement('rd');
-    span.textContent = word;
+    span.innerHTML = word;
     if (i === index) {
       span.classList.add('highlighted-word');
     }
