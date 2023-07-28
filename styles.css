@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+nav {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+}
+
+.nav-list {
+  display: flex;
+  justify-content: space-around;
+  list-style-type: none;
+}
+
+.nav-list li {
+  margin-right: 20px;
+}
+
+.reader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.reader-button {
+  padding: 10px 20px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.reader-text {
+  width: 80%;
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+}
+
+.popover {
+  /* Style the popover as you like */
+}
