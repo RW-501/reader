@@ -21,17 +21,14 @@ nav {
   margin-right: 20px;
 }
 
+/* ... (your other CSS styles) ... */
+
 .reader-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 50px;
-}
-
-.reader-button {
-  padding: 10px 20px;
-  font-size: 18px;
-  cursor: pointer;
 }
 
 .reader-text {
@@ -39,21 +36,35 @@ nav {
   margin-top: 20px;
   padding: 20px;
   border: 1px solid #ccc;
+}
+
+.control-panel {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: #fff;
-  font-size: 16px;
-  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: space-around;
+  width: 200px;
 }
 
 .control-button {
-  padding: 10px 20px;
-  font-size: 18px;
+  padding: 8px 15px;
+  font-size: 16px;
   cursor: pointer;
-  background-color: #FF4081;
-  color: #fff;
   border: none;
+  background-color: #007bff;
+  color: #fff;
   border-radius: 5px;
-  margin-right: 10px;
 }
+
+/* ... (your other CSS styles) ... */
+
 
 .main-button {
   padding: 15px 30px;
