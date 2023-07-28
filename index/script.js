@@ -29,9 +29,10 @@ function speakChunks(synthesis, chunks, index) {
     isSpeaking = false;
     return;
   }
+      console.log('chunks   ' + chunks);
 
   if (index < chunks.length) {
-    console.log('chunks.length   ' + chunks.length);
+    console.log(index+' index   chunks.length   ' + chunks.length);
 
     utterance.text = chunks[index];
     synthesis.speak(utterance);
@@ -70,6 +71,7 @@ function readTextWithBlinking(text) {
       var synthesis = window.speechSynthesis;
 
       const chunks = prepareTextForReading(text);
+      console.log('chunks   ' + chunks);
 
       // Call the function to start reading from the currentWordIndex
       speakChunks(synthesis, chunks, currentWordIndex);
@@ -108,7 +110,7 @@ function highlightWord(index) {
   const readerTextElement = document.getElementById('readerText');
   const words = readerTextElement.textContent.split('. ');
 
-  clearCurrentReaderSpot();
+  //clearCurrentReaderSpot();
 
   // Create a new document fragment to build the updated content
   const fragment = document.createDocumentFragment();
