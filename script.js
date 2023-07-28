@@ -40,4 +40,48 @@ readerTextElement.addEventListener('click', () => {
   hidePopover();
 });
 
-// Additional event listeners and functionality can be added based on your requirements
+
+// Function to show the reader list popup
+function showReaderList() {
+  const readerListPopup = document.getElementById('readerListPopup');
+  readerListPopup.style.display = 'block';
+
+  // Populate the reader list from local storage
+  const readerList = document.getElementById('readerList');
+  readerList.innerHTML = '';
+  const readers = getReadersFromLocalStorage();
+  readers.forEach((reader) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = reader.title;
+    listItem.addEventListener('click', () => {
+      populateReaderScreen(reader.content);
+      hideReaderList();
+    });
+    readerList.appendChild(listItem);
+  });
+}
+
+// Function to hide the reader list popup
+function hideReaderList() {
+  const readerListPopup = document.getElementById('readerListPopup');
+  readerListPopup.style.display = 'none';
+}
+
+// Function to save a reader story to local storage
+function saveReaderToLocalStorage(title, content) {
+  const readers = getReadersFromLocalStorage();
+  readers.push({ title, content });
+  localStorage.setItem('readers', JSON.stringify(readers));
+}
+
+// Function to get reader stories from local storage
+function getReadersFromLocalStorage() {
+  const readersJSON = localStorage.getItem('readers');
+  return readersJSON ? JSON.parse(readersJSON) : [];
+}
+
+// Function to populate the reader screen with the selected story
+function populateReaderScreen(content) {
+  const readerTextElement = document.getElementById('readerText');
+  readerTextElement.textContent = content;
+}
