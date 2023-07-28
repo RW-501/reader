@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reader</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <nav>
+    <ul class="nav-list">
+      <li><a href="/">Reader</a></li>
+      <li><a href="/Categories">Categories</a></li>
+      <li><a href="/Editor">Editor</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <div class="reader-container">
+      <button id="readButton" class="reader-button" onclick="readTextFunc('Your text goes here')">Read</button>
+      <div class="reader-text" id="readerText">
+        <!-- Your text content goes here -->
+      </div>
+    </div>
+  </main>
+
+  <div id="optionPopover" class="popover">
+    <!-- Popover content goes here -->
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
