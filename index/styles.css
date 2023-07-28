@@ -50,17 +50,19 @@ nav {
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 10px;
+  padding: 2%;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: space-around;
-  width: 200px;
+  width: 40%;
 }
 
 .control-button {
   padding: 8px 15px;
-  font-size: 16px;
+  font-size: 1.5em;
   cursor: pointer;
+  margin: 2%;
+
   border: none;
   background-color: #007bff;
   color: #fff;
