@@ -341,12 +341,22 @@ function updateAudioButton() {
   audioButton.textContent = ` ${isAudioEnabled ? 'On' : 'Off'}`;
 }
 
+// ... (existing variables and functions) ...
+
+// Function to get settings from local storage
+function getSettings() {
+  const settingsJSON = localStorage.getItem('settings');
+  return settingsJSON ? JSON.parse(settingsJSON) : {};
+}
+
 // Load audio settings from local storage
 function loadAudioSettings() {
   const settings = getSettings();
   isAudioEnabled = settings.audioEnabled !== undefined ? settings.audioEnabled : true;
   updateAudioButton();
 }
+
+// ... (rest of the code) ...
 
 // Event listener for the audio button
 audioButton.addEventListener('click', toggleAudio);
