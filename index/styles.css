@@ -22,6 +22,10 @@ nav {
 }
 
 /* ... (your other CSS styles) ... */
+  .highlighted-word {
+    background-color: yellow;
+    font-weight: bold;
+  }
 
 .reader-container {
   position: relative;
