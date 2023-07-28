@@ -49,7 +49,7 @@ function showReaderList() {
   // Populate the reader list from local storage
   const readerList = document.getElementById('readerList');
   readerList.innerHTML = '';
-  const readers = getReadersFromLocalStorage();
+  const readers = getDocumentsFromLocalStorage(); // Use the getDocumentsFromLocalStorage function to get documents
   readers.forEach((reader) => {
     const listItem = document.createElement('li');
     listItem.textContent = reader.title;
@@ -61,6 +61,7 @@ function showReaderList() {
   });
 }
 
+
 // Function to hide the reader list popup
 function hideReaderList() {
   const readerListPopup = document.getElementById('readerListPopup');
@@ -68,20 +69,33 @@ function hideReaderList() {
 }
 
 // Function to save a reader story to local storage
+// Function to save a reader story as a document to local storage
 function saveReaderToLocalStorage(title, content) {
-  const readers = getReadersFromLocalStorage();
-  readers.push({ title, content });
-  localStorage.setItem('readers', JSON.stringify(readers));
+  const documents = getDocumentsFromLocalStorage();
+  documents.push({ title, content });
+  localStorage.setItem('documents', JSON.stringify(documents));
 }
 
-// Function to get reader stories from local storage
-function getReadersFromLocalStorage() {
-  const readersJSON = localStorage.getItem('readers');
-  return readersJSON ? JSON.parse(readersJSON) : [];
+
+
+// Function to get documents from local storage
+function getDocumentsFromLocalStorage() {
+  console.log("getDocumentsFromLocalStorage() called");
+  const documentsJSON = localStorage.getItem('documents');
+  const documents = documentsJSON ? JSON.parse(documentsJSON) : [];
+  console.log("Documents retrieved from local storage:", documents);
+  return documents;
 }
 
 // Function to populate the reader screen with the selected story
 function populateReaderScreen(content) {
+  console.log("populateReaderScreen() called with content:", content);
   const readerTextElement = document.getElementById('readerText');
   readerTextElement.textContent = content;
 }
+
+
+
+
+
+
