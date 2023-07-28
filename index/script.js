@@ -32,21 +32,8 @@ function readTextWithBlinking(text) {
     if ('speechSynthesis' in window) {
       var synthesis = window.speechSynthesis;
 
-      let blankPattern = /_{1,}/; // Pattern for one or more underscores
-      let replacedQuestion2 = text.replace(blankPattern, ' blank ');
-
-      let blankPattern2 = 'True or False:'; // Pattern for one or more underscores
-      let textToRead = replacedQuestion2.replace(blankPattern2, '');
-
-      // Split the text into chunks
-      var chunkSize = 200; // Adjust the chunk size as needed
-      var chunks = [];
-      var words = textToRead.split(' ');
-
-      for (var i = 0; i < words.length; i += chunkSize) {
-        var chunk = words.slice(i, i + chunkSize).join(' ');
-        chunks.push(chunk);
-      }
+           
+     const chunks = prepareTextForReading(text);
 
       // Function to speak the chunks sequentially
           function speakChunks(index) {
@@ -65,6 +52,8 @@ function readTextWithBlinking(text) {
             isReadingPaused = false;
             isSpeaking = true;
             currentWordIndex = index; // Update the currentWordIndex to the current index being read
+                 console.log('currentWordIndex   '+currentWordIndex);
+
             highlightWord(index); // Highlight the current word being read
           };
           utterance.onend = function () {
@@ -88,6 +77,27 @@ function readTextWithBlinking(text) {
   }
 }
 
+function prepareTextForReading(text, chunkSize = 200) {
+  // Replace patterns with appropriate content
+
+ 
+  const blankPattern = /_{1,}/g; // Pattern for one or more underscores
+  const replacedQuestion = text.replace(blankPattern, ' blank ');
+
+  const blankPattern2 = 'True or False:'; // Pattern for one or more underscores
+  const textToRead = replacedQuestion.replace(blankPattern2, '');
+
+  // Split the text into chunks
+  const chunks = [];
+  const words = textToRead.split(' ');
+
+  for (let i = 0; i < words.length; i += chunkSize) {
+    const chunk = words.slice(i, i + chunkSize).join(' ');
+    chunks.push(chunk);
+  }
+
+  return chunks;
+}
 
 
 // Function to highlight the current word being read
@@ -119,10 +129,14 @@ function pauseReading() {
   if (isSpeaking) {
     isReadingPaused = true;
     stopSpeaking();
-  }
+  }else{
+         speakChunks(currentWordIndex);
+)
+   
 }
 // Function to stop the reading
 function stopReading() {
+  currentWordIndex = 0;
   if (isSpeaking) {
     isReadingStopped = true;
     stopSpeaking();
@@ -157,7 +171,7 @@ function clearCurrentReaderSpot() {
 const readButton = document.getElementById('audioButton');
 readButton.addEventListener('click', () => {
   const readerTextElement = document.getElementById('readerText');
-  const content = readerTextElement.textContent;
+  const content = readerTextElement.innerHTML;
 
   // Reset reading status
   isReadingPaused = false;
