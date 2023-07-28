@@ -90,27 +90,27 @@ function updateReaderText(text) {
 
 
 // Function to show the popover
-function showPopover() {
+function showOptionsPopover() {
   const popover = document.getElementById('optionPopover');
   popover.style.display = 'block';
 }
 
 // Function to hide the popover
-function hidePopover() {
+function hideOptionsPopover() {
   const popover = document.getElementById('optionPopover');
   popover.style.display = 'none';
 }
 
 // Event listener to show the popover when the button is clicked
-const readerButton = document.getElementById('readButton');
+const readerButton = document.getElementById('optionsButton');
 readerButton.addEventListener('click', () => {
-  showPopover();
+  showOptionsPopover();
 });
 
 // Event listener to hide the popover when the reader text is clicked
-const readerTextElement = document.getElementById('readerText');
+const readerTextElement = document.getElementById('optionsButton');
 readerTextElement.addEventListener('click', () => {
-  hidePopover();
+  hideOptionsPopover();
 });
 
 
