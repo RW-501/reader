@@ -136,7 +136,7 @@ function stopSpeaking() {
     synthesis.cancel();
   }
   isSpeaking = false;
-  document.getElementById('readButton').innerHTML =
+  document.getElementById('audioButton').innerHTML =
     "<div>🔈</div><span>Read</span>";
   stopBlinking();
 }
