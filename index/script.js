@@ -134,12 +134,11 @@ function highlightWord(index) {
   words.forEach((word, i) => {
     const span = document.createElement('div');
     span.textContent = word + (i === words.length ? '' : '.');
-  span.addEventListener('click', () => speakChunks(synthesis, chunks, i));
+    
+    // Add an event listener to each word span
+    span.addEventListener('click', () => startReadingFromWord(i));
 
     if (i === index - 1) {
-     console.log('index   ' + index);
-
-     
       // Set the class to the word that comes after the current word being read
       span.classList.add('highlighted-word');
     }
@@ -152,6 +151,20 @@ function highlightWord(index) {
   readerTextElement.textContent = '';
   readerTextElement.appendChild(fragment);
 }
+
+function startReadingFromWord(wordIndex) {
+  // Stop the ongoing speech and reset the state
+  stopSpeaking();
+  isReadingPaused = false;
+  isReadingStopped = false;
+  
+  // Update the currentWordIndex to the clicked word index
+  currentWordIndex = wordIndex;
+  
+  // Call the function to start reading from the clicked word index
+  speakChunks(synthesis, chunks, currentWordIndex);
+}
+
 
 
 function pauseReading() {
