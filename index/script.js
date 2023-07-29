@@ -238,13 +238,13 @@ stopButton.addEventListener('click', stopReading);
 
 // Function to show the popover
 function showOptionsPopover() {
-  const popover = document.getElementById('optionPopover');
+  const popover = document.getElementById('optionsPopup');
   popover.style.display = 'block';
 }
 
 // Function to hide the popover
 function hideOptionsPopover() {
-  const popover = document.getElementById('optionPopover');
+  const popover = document.getElementById('optionsPopup');
   popover.style.display = 'none';
 }
 
