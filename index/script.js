@@ -98,7 +98,6 @@ function prepareTextForReading(text) {
   const textToRead = replacedQuestion.replace(blankPattern2, '');
 
 
- //textToRead = "Title: The Haunting of Blackwood ManorOnce a grand and imposing mansion, Blackwood Manor stood perched on a desolate hill overlooking the small, eerie town of Ravensville. The mansion's dark, brooding facade and its ominous history had earned it a reputation as a haunted house—a place where restless spirits roamed the halls and an unspeakable horror lurked within.The tale of Blackwood Manor began decades ago when the enigmatic Lord Reginald Blackwood lived there with his beautiful wife, Lady Genevieve. The townspeople whispered rumors about the couple, saying that they dabbled in the occult and practiced dark rituals within the mansion's walls. Children dared each other to approach the mansion's iron gates, but none were brave enough to venture closer.One fateful night, a violent storm swept over Ravensville, unleashing thunder and lightning that seemed to target Blackwood Manor."
   // Split the text into chunks
   const chunks = [];
 const chunkSize = 5;
@@ -135,6 +134,7 @@ function highlightWord(index) {
   words.forEach((word, i) => {
     const span = document.createElement('div');
     span.textContent = word + (i === words.length ? '' : '.');
+  span.addEventListener('click', () => speakChunks(synthesis, chunks, i));
 
     if (i === index - 1) {
      console.log('index   ' + index);
