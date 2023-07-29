@@ -13,7 +13,7 @@ var currentWordIndex = 0;
 #4 i want the user to be able to click a word and start at that point also.
 
 use your logic to make this work like a mainstream reader and even better.
-
+I need a function that can get the index of a word clicked on    
 */
 
 
@@ -130,9 +130,9 @@ function highlightWord(index) {
 
   words.forEach((word, i) => {
     const span = document.createElement('div');
-    span.textContent = word + (i === words.length - 1 ? '' : '.');
+    span.textContent = word + (i === words.length ? '' : '.');
 
-    if (i === index + 1) {
+    if (i === index) {
       // Set the class to the word that comes after the current word being read
       span.classList.add('highlighted-word');
     }
