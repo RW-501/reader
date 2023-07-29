@@ -29,7 +29,7 @@ function speakChunks(synthesis, chunks, index) {
     isSpeaking = false;
     return;
   }
-      console.log('chunks   ' + chunks);
+  //    console.log('chunks   ' + chunks);
 
   if (index < chunks.length) {
     console.log(index+' index   chunks.length   ' + chunks.length);
@@ -40,7 +40,7 @@ function speakChunks(synthesis, chunks, index) {
       isReadingPaused = false;
       isSpeaking = true;
       currentWordIndex = index; // Update the currentWordIndex to the current index being read
- //     console.log('currentWordIndex   ' + currentWordIndex);
+     console.log('currentWordIndex   ' + currentWordIndex);
 
       highlightWord(index); // Highlight the current word being read
     };
@@ -125,29 +125,26 @@ function highlightWord(index) {
   const readerTextElement = document.getElementById('readerText');
   const words = readerTextElement.textContent.split('. ');
 
-  //clearCurrentReaderSpot();
-console.log('currentWordIndex   ' + currentWordIndex);
   // Create a new document fragment to build the updated content
   const fragment = document.createDocumentFragment();
 
   words.forEach((word, i) => {
     const span = document.createElement('div');
-  //  span.textContent 
-     span.innerHTML = word + (i === words.length - 1 ? '' : '.'); // Add back the period after each word except for the last one
-    if (i === index) {
+    span.textContent = word + (i === words.length - 1 ? '' : '.');
+
+    if (i === index + 1) {
+      // Set the class to the word that comes after the current word being read
       span.classList.add('highlighted-word');
     }
+
     fragment.appendChild(span);
     fragment.appendChild(document.createTextNode(' '));
   });
 
   // Clear the previous content and append the updated content
-  readerTextElement.innerHTML = ' ';
-//  readerTextElement.textContent = ' ';
+  readerTextElement.textContent = '';
   readerTextElement.appendChild(fragment);
 }
-
-
 
 
 function pauseReading() {
