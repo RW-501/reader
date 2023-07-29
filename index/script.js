@@ -132,7 +132,10 @@ function highlightWord(index) {
     const span = document.createElement('div');
     span.textContent = word + (i === words.length ? '' : '.');
 
-    if (i === index) {
+    if (i === index - 1) {
+     console.log('index   ' + index);
+
+     
       // Set the class to the word that comes after the current word being read
       span.classList.add('highlighted-word');
     }
