@@ -4,6 +4,8 @@ var blinkInterval;
 var utterance = new SpeechSynthesisUtterance();
 var isSpeaking = false;
 var currentWordIndex = 0;
+var chunks;
+      var synthesis;
 
 /*
 
@@ -14,9 +16,11 @@ var currentWordIndex = 0;
 
 use your logic to make this work like a mainstream reader and even better.
 I need a function that can get the index of a word clicked on    
+
+
 */
 
-
+currentWordIndex
 
 var isReadingPaused = false; // Track if the reading is paused
 var isReadingStopped = false; // Track if the reading is stopped
@@ -68,9 +72,9 @@ function readTextWithBlinking(text) {
     }
 
     if ('speechSynthesis' in window) {
-      var synthesis = window.speechSynthesis;
+       synthesis = window.speechSynthesis;
 
-      const chunks = prepareTextForReading(text);
+       chunks = prepareTextForReading(text);
   //    console.log('chunks   ' + chunks);
 
       // Call the function to start reading from the currentWordIndex
@@ -155,7 +159,7 @@ function pauseReading() {
     isReadingPaused = true;
     stopSpeaking();
   }else{
-         speakChunks(currentWordIndex);
+        speakChunks(synthesis, chunks, currentWordIndex);
   }
    
 }
