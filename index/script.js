@@ -153,18 +153,23 @@ function highlightWord(index) {
 }
 
 function startReadingFromWord(wordIndex) {
-  // Stop the ongoing speech and reset the state
   stopSpeaking();
   isReadingPaused = false;
   isReadingStopped = false;
-  
-  // Update the currentWordIndex to the clicked word index
-  currentWordIndex = wordIndex;
-  
-  // Call the function to start reading from the clicked word index
+
+  // Find the paragraph/chunk that contains the word
+  const wordSpans = document.querySelectorAll(".clickable-word");
+  const selectedWord = wordSpans[wordIndex].textContent;
+
+  for (let i = 0; i < chunks.length; i++) {
+    if (chunks[i].includes(selectedWord)) {
+      currentWordIndex = i;
+      break;
+    }
+  }
+
   speakChunks(synthesis, chunks, currentWordIndex);
 }
-
 
 
 function pauseReading() {
@@ -477,4 +482,21 @@ function loadVoiceSettings() {
 
 
 
+function updateWordCount() {
+  const readerTextElement = document.getElementById("readerText");
+  const wordCount = readerTextElement.innerText.trim().split(/\s+/).length;
+  document.getElementById("wordCount").innerText = `Words: ${wordCount}`;
+}
 
+function highlightSearch() {
+  const query = document.getElementById("searchInput").value.toLowerCase();
+  const spans = document.querySelectorAll(".clickable-word");
+
+  spans.forEach(span => {
+    if (span.textContent.toLowerCase().includes(query)) {
+      span.classList.add("search-highlight");
+    } else {
+      span.classList.remove("search-highlight");
+    }
+  });
+}

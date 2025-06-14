@@ -18,10 +18,16 @@
 <main>
                     <button id="optionsButton" onclick="">Options</button>
 
+                    <div class="script-stats">
+  <p id="wordCount">Words: 0</p>
+</div>
+
   <div class="reader-container">
 
     <h2 id="mainTitle">Reader</h2>
     <div class="BTNs-area">
+      <input type="text" id="searchInput" placeholder="Search..." oninput="highlightSearch()" />
+
     </div>
 
     <div id="readerText" class="reader-text">Your reader text here...</div>

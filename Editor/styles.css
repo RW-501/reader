@@ -60,3 +60,21 @@ nav {
 }
 
 /* Additional styles for the pop-up can be added here */
+
+
+.search-highlight {
+  background-color: yellow;
+}
+
+
+.clickable-word {
+  cursor: pointer;
+  padding: 2px;
+  transition: background-color 0.3s ease;
+}
+.clickable-word:hover {
+  background-color: #dcdcdc;
+}
+.highlighted-word {
+  background-color: lightgreen;
+}
